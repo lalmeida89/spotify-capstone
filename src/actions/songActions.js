@@ -36,7 +36,6 @@ export const fetchSongs = (accessToken) => {
       }
       return res.json();
     }).then(res => {
-      console.log(res);
       // get all artist ids and remove duplicates
       let artistIds = uniqBy(res.items, (item) => {
         return item.track.artists[0].name;

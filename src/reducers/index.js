@@ -8,6 +8,7 @@ import artistsReducer from './artistsReducer';
 import uiReducer from './uiReducer';
 import browseReducer from './browseReducer';
 import soundReducer from './soundReducer';
+import chartReducer from './chartReducer'
 
 export default combineReducers({
   userReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   artistsReducer,
   uiReducer,
   browseReducer,
-  soundReducer
+  soundReducer,
+  chartReducer
 });

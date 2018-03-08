@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import { fetchUser } from './actions/userActions';
 import { setToken } from './actions/tokenActions';
 import { playSong, stopSong, pauseSong, resumeSong } from './actions/songActions';
+import { setSongAsProp } from './actions/chartActions'
 import './App.css';
 
+
+import Pitch from './components/Pitch/pitch'
+import Chart from './components/Chart/chart';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import UserPlaylists from './components/UserPlaylists';
@@ -69,8 +73,9 @@ class App extends Component {
 	}
 
 	audioControl = (song) => {
-
-	  const { playSong, stopSong } = this.props;
+		console.log(song, this.props);
+	  const { playSong, stopSong, setSongAsProp } = this.props;
+		setSongAsProp(song);
 
 	  if(this.audio === undefined){
 	    playSong(song.track);
@@ -100,6 +105,9 @@ class App extends Component {
 	        <div className='main-section'>
 	          <Header />
 	          <div className='main-section-container'>
+							<Pitch song={ this.props.song }/>
+							<Chart notes = { this.props.notes } />
+
 	            <MainHeader
 	              pauseSong={ this.pauseSong }
 	              resumeSong={ this.resumeSong }
@@ -139,7 +147,9 @@ const mapStateToProps = (state) => {
 
   return {
     token: state.tokenReducer.token,
-    volume: state.soundReducer.volume
+    volume: state.soundReducer.volume,
+		notes: state.chartReducer.notes,
+		song: state.chartReducer.song
   };
 
 };
@@ -152,7 +162,8 @@ const mapDispatchToProps = dispatch => {
     playSong,
     stopSong,
     pauseSong,
-    resumeSong
+    resumeSong,
+		setSongAsProp
   },dispatch);
 
 };
