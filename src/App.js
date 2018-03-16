@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { fetchUser } from './actions/userActions';
 import { setToken } from './actions/tokenActions';
 import { playSong, stopSong, pauseSong, resumeSong } from './actions/songActions';
-import { setSongAsProp } from './actions/chartActions'
+import { setSongAsProp, noteChange } from './actions/chartActions'
+import { chooseSong } from './actions/pitchAction'
 import './App.css';
 
 
@@ -24,7 +25,10 @@ class App extends Component {
 	static audio;
 
 	componentDidMount() {
-
+		/*setNotes() {
+			this.refs.pitch.pickSong();
+			this.refs.pitch.togglePlayback();
+		}*/
 	  let hashParams = {};
 	  let e, r = /([^&;=]+)=?([^&;]*)/g,
 	    q = window.location.hash.substring(1);
@@ -68,6 +72,7 @@ class App extends Component {
 	resumeSong = () => {
 	  if(this.audio) {
 	    this.props.resumeSong();
+			this.props.chooseSong();
 	    this.audio.play();
 	  }
 	}
@@ -81,6 +86,10 @@ class App extends Component {
 	    playSong(song.track);
 	    this.audio = new Audio(song.track.preview_url);
 	    this.audio.play();
+			noteChange(song.track.preview_url)
+			console.log(this.audio.src);
+			this.props.chooseSong(this.audio.src);
+			//setNotes(song.track)
 	  } else {
 	    stopSong();
 	    this.audio.pause();
@@ -113,7 +122,7 @@ class App extends Component {
 	              resumeSong={ this.resumeSong }
 	            />
 	            <MainView
-	              pauseSong={this.pauseSong}
+	              pauseSong={this.pauseSong }
 	              resumeSong={ this.resumeSong }
 	              audioControl={ this.audioControl }
 	            />
@@ -140,7 +149,8 @@ App.propTypes = {
   playSong: PropTypes.func,
   stopSong: PropTypes.func,
   resumeSong: PropTypes.func,
-  volume: PropTypes.number
+  volume: PropTypes.number,
+	chooseSong: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
@@ -163,7 +173,8 @@ const mapDispatchToProps = dispatch => {
     stopSong,
     pauseSong,
     resumeSong,
-		setSongAsProp
+		setSongAsProp,
+		chooseSong
   },dispatch);
 
 };

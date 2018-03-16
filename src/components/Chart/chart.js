@@ -21,7 +21,7 @@ export default class Charts extends React.Component {
   	return (
     	<div>
 
-				<LineChart width={600} height={700} data={this.props.notes}>
+				<LineChart width={600} height={400} data={this.props.notes}>
        		<XAxis name={this.props.notes.time/100} dataKey="time" padding={{left: 30, right: 30}}/>
        		<YAxis />
        		<CartesianGrid strokeDasharray="3 3"/>

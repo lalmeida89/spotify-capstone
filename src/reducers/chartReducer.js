@@ -12,7 +12,7 @@ export const chartReducer = (state = defaultState, action) => {
     }
 
     case 'SET_SONG_AS_PROP':
-    console.log(action)
+    console.log(action.payload.track.preview_url)
     return {
       ...state,
       song : action.payload
